@@ -1,0 +1,42 @@
+{
+  "name": "re-ducks-example",
+  "version": "1.0.0",
+  "description": "A react-redux example project based on the folder structure proposed here: https://github.com/alexnm/re-ducks",
+  "main": "index.js",
+  "repository": {
+    "url": "https://github.com/FortechRomania/re-ducks-example",
+    "type": "git"
+  },
+  "author": "alexnm <alex.n.moldovan@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1",
+    "react-helmet": "^3.3.0",
+    "react-redux": "^5.0.1",
+    "react-router": "4.0.0-alpha.6",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.1.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.21.0",
+    "babel-eslint": "^7.1.1",
+    "babel-loader": "^6.2.10",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "eslint": "^3.2.2",
+    "eslint-config-airbnb": "^10.0.0",
+    "eslint-plugin-import": "^1.12.0",
+    "eslint-plugin-jsx-a11y": "^2.0.1",
+    "eslint-plugin-react": "^6.0.0",
+    "isomorphic-fetch": "^2.2.1",
+    "nodemon": "^1.11.0",
+    "webpack": "2.2.0-rc.3"
+  },
+  "scripts": {
+    "start": "nodemon index.js",
+    "compile": "webpack --progress --colors --watch",
+    "development": "npm run compile & npm start",
+    "linter": "eslint src"
+  }
+}
