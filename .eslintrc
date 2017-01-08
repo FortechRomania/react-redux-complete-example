@@ -35,6 +35,9 @@
         // react
         "react/jsx-curly-spacing": [ 2, "always" ],
         "react/jsx-indent": [ 2, 4 ],
-        "jsx-a11y/anchor-has-content": 2
+        "react/jsx-filename-extension": 0,
+
+        //import
+        "import/no-extraneous-dependencies": 0
     }
 }
