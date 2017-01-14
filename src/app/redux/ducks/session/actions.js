@@ -9,7 +9,7 @@ const logout = ( ) => ( {
 } );
 
 const initializeSession = ( ) => ( {
-    type: types.INITIALIZE_SESSION,
+    type: types.INITIALIZE,
 } );
 
 const setRedirectAfterLogin = ( ) => ( {

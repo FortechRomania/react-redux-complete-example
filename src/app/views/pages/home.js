@@ -1,3 +1,4 @@
 import React from "react";
+import { dictionary } from "../../utilities";
 
-export default ( ) => ( <div>Hello world</div> );
+export default ( ) => ( <div>{ dictionary.title }</div> );

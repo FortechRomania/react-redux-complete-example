@@ -1,28 +1,15 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router";
 
 export default function withAuthentication( WrappedComponent ) {
-    class Wrapper extends Component {
-        componentWillMount( ) {
-            if ( !this.props.isAuthenticated ) {
-                // redirect
-            }
+    const Wrapper = ( { isAuthenticated } ) => {
+        if ( !isAuthenticated ) {
+            return ( <Redirect to="/login" /> );
         }
 
-        componentWillReceiveProps( ) {
-            if ( !this.props.isAuthenticated ) {
-                // redirect
-            }
-        }
-
-        render( ) {
-            if ( !this.props.isAuthenticated ) {
-                return false;
-            }
-
-            return ( <WrappedComponent { ...this.props } /> );
-        }
-    }
+        return ( <WrappedComponent { ...this.props } /> );
+    };
 
     const { bool } = React.PropTypes;
     Wrapper.propTypes = {

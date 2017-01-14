@@ -1,8 +1,9 @@
 const path = require( "path" );
 const webpack = require( "webpack" );
 const packageFile = require( "./package.json" );
+const BundleAnalyzerPlugin = require( "webpack-bundle-analyzer" ).BundleAnalyzerPlugin;
 
-const productionEnv = process.NODE_ENV === "production";
+const productionEnv = process.env.NODE_ENV === "production";
 
 const plugins = [
     new webpack.optimize.CommonsChunkPlugin( {
@@ -10,6 +11,7 @@ const plugins = [
         minChunks: Infinity,
         filename: "lib.bundle.js",
     } ),
+    // new BundleAnalyzerPlugin( ),
 ];
 
 if ( productionEnv ) {
@@ -39,7 +41,7 @@ if ( productionEnv ) {
 }
 
 module.exports = {
-    context: __dirname + "/src",
+    context: path.resolve( __dirname, "src" ),
 
     entry: {
         app: "./client/index.js",
@@ -47,7 +49,7 @@ module.exports = {
     },
 
     output: {
-        path: path.resolve( __dirname + "/dist" ),
+        path: path.resolve( __dirname, "dist" ),
         filename: "[name].bundle.js",
     },
 

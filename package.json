@@ -14,7 +14,7 @@
     "react-dom": "^15.4.1",
     "react-helmet": "^3.3.0",
     "react-redux": "^5.0.1",
-    "react-router": "^3.0.0",
+    "react-router": "4.0.0-alpha.6",
     "redux": "^3.6.0",
     "redux-logger": "^2.7.4",
     "redux-thunk": "^2.1.0"
@@ -36,13 +36,14 @@
     "isomorphic-fetch": "^2.2.1",
     "nodemon": "^1.11.0",
     "request": "^2.79.0",
-    "webpack": "2.2.0-rc.3"
+    "webpack": "2.2.0-rc.3",
+    "webpack-bundle-analyzer": "^2.2.1"
   },
   "scripts": {
     "dev-server": "nodemon index.js",
     "compile-js": "webpack --progress --colors --watch",
     "start": "npm run dev-server & npm run compile-js",
-    "build": "webpack -p",
+    "build": "NODE_ENV=production webpack -p",
     "linter": "eslint src"
   }
 }

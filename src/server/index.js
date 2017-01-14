@@ -5,10 +5,10 @@ import Helmet from "react-helmet";
 
 import React from "react";
 import { renderToString } from "react-dom/server";
-import { RouterContext, match } from "react-router";
+import { ServerRouter, createServerRenderContext } from "react-router";
 import { Provider as ReduxProvider } from "react-redux";
 
-import routes from "../app/views/routes";
+import layouts from "../app/views/layouts";
 import configureStore from "../app/redux/store";
 
 const app = express( );
@@ -31,7 +31,7 @@ app.use( "/api", ( req, res ) => {
 } );
 
 app.use( ( req, res, next ) => {
-    match( { routes, location: req.url }, ( error, redirectLocation, renderProps ) => {
+    /*match( { routes, location: req.url }, ( error, redirectLocation, renderProps ) => {
         if ( !renderProps ) {
             return next( );
         }
@@ -40,7 +40,24 @@ app.use( ( req, res, next ) => {
 
         return prefetchDataForComponents( renderProps, reduxStore )
             .then( ( ) => respond( res, renderProps, reduxStore ) );
-    } );
+    } );*/
+
+    const reduxStore = configureStore( );
+    const context = createServerRenderContext( );
+
+    const reactDom = renderToString(
+        <ReduxProvider store={ reduxStore }>
+            <ServerRouter location={ req.url } context={ context }>
+                { layouts }
+            </ServerRouter>
+        </ReduxProvider>
+    );
+
+    const head = Helmet.rewind( );
+    const reduxState = reduxStore.getState( );
+
+    res.writeHead( 200, { "Content-Type": "text/html" } );
+    res.end( templateHtml( head, reactDom, reduxState ) );
 } );
 
 function prefetchDataForComponents( renderProps, reduxStore ) {
