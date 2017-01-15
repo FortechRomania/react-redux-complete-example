@@ -14,6 +14,7 @@
 
         // spacing
         "space-in-parens": [ 2, "always" ],
+        "space-before-function-paren": 0,
         "template-curly-spacing": [ 2, "always" ],
         "array-bracket-spacing": [ 2, "always" ],
         "object-curly-spacing": [ 2, "always" ],
@@ -31,6 +32,9 @@
         
         // keep it simple
         "complexity": [ 1, 5 ],
+
+        // let's be flexible'
+        "prefer-arrow-callback": 0,
         
         // react
         "react/jsx-curly-spacing": [ 2, "always" ],

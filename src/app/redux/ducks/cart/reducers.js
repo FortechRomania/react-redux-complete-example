@@ -18,7 +18,7 @@ const cartReducer = createReducer( initialState )( {
         const { product, quantity } = action.payload;
         const index = utils.productPositionInCart( state, product );
         if ( index === -1 ) {
-            return [ ...state, utils.newCartItem( product, quantity ) ];
+            return [ utils.newCartItem( product, quantity ), ...state ];
         }
 
         const currentItem = state[ index ];

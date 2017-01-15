@@ -1,3 +1,4 @@
+import { combineReducers } from "redux";
 import types from "./types";
 import { createReducer } from "../../utils";
 
@@ -23,9 +24,15 @@ const initialState = {
     ],
 };
 
-const productReducer = createReducer( initialState )( {
+const detailsReducer = createReducer( initialState )( {
     [ types.FETCH_DETAILS_COMPLETED ]: ( state, action ) => action.payload,
+} );
+
+const listReducer = createReducer( initialState )( {
     [ types.FETCH_LIST_COMPLETED ]: ( state, action ) => action.payload,
 } );
 
-export default productReducer;
+export default combineReducers( {
+    details: detailsReducer,
+    list: listReducer,
+} );

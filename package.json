@@ -32,8 +32,10 @@
     "eslint-plugin-import": "^1.12.0",
     "eslint-plugin-jsx-a11y": "^2.0.1",
     "eslint-plugin-react": "^6.0.0",
+    "expect.js": "^0.3.1",
     "express": "^4.14.0",
     "isomorphic-fetch": "^2.2.1",
+    "mocha": "^3.2.0",
     "nodemon": "^1.11.0",
     "request": "^2.79.0",
     "webpack": "2.2.0-rc.3",
@@ -44,6 +46,7 @@
     "compile-js": "webpack --progress --colors --watch",
     "start": "npm run dev-server & npm run compile-js",
     "build": "NODE_ENV=production webpack -p",
-    "linter": "eslint src"
+    "linter": "eslint src",
+    "test": "mocha --require mochaSetup src/app --recursive"
   }
 }
