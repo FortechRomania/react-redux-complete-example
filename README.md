@@ -29,6 +29,16 @@ npm start
 
 Access `localhost:7777` to see the magic.
 
+Running the tests
+```
+npm run test
+```
+
+Running eslint
+```
+npm run linter
+```
+
 ## Todos
 - [x] Ducks modular approach
 - [ ] Server render with RR 4
