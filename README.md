@@ -3,6 +3,6 @@ An example project based on the folder structure proposed here: https://github.c
 
 ## Todos
 - [x] Ducks modular approach
-- [] Server render with RR 4
-- [] Redux Dev Tools / HMR
-- [] Style compilation with webpack
+- [ ] Server render with RR 4
+- [ ] Redux Dev Tools / HMR
+- [ ] Style compilation with webpack
