@@ -1,4 +1,5 @@
 import types from "./types";
+import { createReducer } from "../../utils";
 
 /* State shape
 {
@@ -22,14 +23,9 @@ const initialState = {
     ],
 };
 
-const productReducer = ( state = initialState, action ) => {
-    switch ( action.type ) {
-        case types.FETCH_DETAILS_COMPLETED:
-        case types.FETCH_LIST_COMPLETED:
-            return action.payload;
-        default:
-            return state;
-    }
-};
+const productReducer = createReducer( initialState )( {
+    [ types.FETCH_DETAILS_COMPLETED ]: ( state, action ) => action.payload,
+    [ types.FETCH_LIST_COMPLETED ]: ( state, action ) => action.payload,
+} );
 
 export default productReducer;

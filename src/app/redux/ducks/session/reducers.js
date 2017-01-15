@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 import types from "./types";
+import { createReducer } from "../../utils";
 
 /* State shape
 {
@@ -8,25 +9,14 @@ import types from "./types";
 }
 */
 
-const authReducer = ( state = false, action ) => {
-    switch ( action.type ) {
-        case types.LOGIN:
-            return true;
-        case types.LOGOUT:
-            return false;
-        default:
-            return state;
-    }
-};
+const authReducer = createReducer( false )( {
+    [ types.LOGIN ]: ( ) => true,
+    [ types.LOGOUT ]: ( ) => false,
+} );
 
-const redirectAfterLoginReducer = ( state = null, action ) => {
-    switch ( action.type ) {
-        case types.SET_REDIRECT_AFTER_LOGIN:
-            return action.payload.redirectUrl;
-        default:
-            return state;
-    }
-};
+const redirectAfterLoginReducer = createReducer( null )( {
+    [ types.SET_REDIRECT_AFTER_LOGIN ]: ( state, action ) => action.payload.redirectUrl,
+} );
 
 export default combineReducers( {
     isAuthenticated: authReducer,

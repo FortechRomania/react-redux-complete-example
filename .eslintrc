@@ -9,7 +9,7 @@
     "parser": "babel-eslint",
     "rules": {
         // indentation
-        "indent": [ 2, 4 ],
+        "indent": [ 2, 4, { "SwitchCase": 1 } ],
         "max-len": [ 1, 120, { "ignoreUrls": true } ],
 
         // spacing
@@ -38,6 +38,8 @@
         "react/jsx-filename-extension": 0,
 
         //import
-        "import/no-extraneous-dependencies": 0
+        "import/no-extraneous-dependencies": 0,
+        "import/prefer-default-export": 0,
+        "import/no-named-as-default-member": 0,
     }
 }
