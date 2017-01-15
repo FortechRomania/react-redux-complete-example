@@ -2,7 +2,7 @@
 An example project based on the folder structure proposed here: https://github.com/alexnm/re-ducks
 
 ## Todos
-- [] Ducks modular approach
-- [] React-router 4
+- [x] Ducks modular approach
+- [] Server render with RR 4
 - [] Redux Dev Tools / HMR
 - [] Style compilation with webpack
