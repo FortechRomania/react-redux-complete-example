@@ -1,47 +1,27 @@
 import express from "express";
 import path from "path";
-import request from "request";
-import Helmet from "react-helmet";
+import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
 
 import React from "react";
+import Helmet from "react-helmet";
 import { renderToString } from "react-dom/server";
 import { ServerRouter, createServerRenderContext } from "react-router";
 import { Provider as ReduxProvider } from "react-redux";
 
+import apiRoutes from "./apiRoutes";
 import layouts from "../app/views/layouts";
 import configureStore from "../app/redux/store";
 
 const app = express( );
 
 const DEFAULT_PORT = 7777;
+app.use( bodyParser.json( ) );
+app.use( cookieParser( ) );
 app.use( express.static( path.resolve( __dirname, "../../dist" ) ) );
+app.use( "/api", apiRoutes );
 
-app.use( "/api", ( req, res ) => {
-    const url = process.env.BASE_API_URL + req.url;
-    let proxyReq = null;
-    if ( req.method === "POST" ) {
-        proxyReq = request.post( { uri: url, json: req.body } );
-    } else if ( req.method === "PATCH" ) {
-        proxyReq = request.patch( { uri: url, json: req.body } );
-    } else {
-        proxyReq = request( url );
-    }
-
-    req.pipe( proxyReq ).pipe( res );
-} );
-
-app.use( ( req, res, next ) => {
-    /*match( { routes, location: req.url }, ( error, redirectLocation, renderProps ) => {
-        if ( !renderProps ) {
-            return next( );
-        }
-
-        const reduxStore = configureStore( );
-
-        return prefetchDataForComponents( renderProps, reduxStore )
-            .then( ( ) => respond( res, renderProps, reduxStore ) );
-    } );*/
-
+app.use( ( req, res ) => {
     const reduxStore = configureStore( );
     const context = createServerRenderContext( );
 
@@ -59,27 +39,6 @@ app.use( ( req, res, next ) => {
     res.writeHead( 200, { "Content-Type": "text/html" } );
     res.end( templateHtml( head, reactDom, reduxState ) );
 } );
-
-function prefetchDataForComponents( renderProps, reduxStore ) {
-    const promises = renderProps.components
-                                .filter( comp => comp.prefetch )
-                                .map( comp => reduxStore.dispatch( comp.prefetch( renderProps ) ) );
-    return Promise.all( promises );
-}
-
-function respond( res, renderProps, reduxStore ) {
-    const reactDom = renderToString(
-        <ReduxProvider store={ reduxStore }>
-            <RouterContext { ...renderProps } />
-        </ReduxProvider>
-    );
-
-    const head = Helmet.rewind( );
-    const reduxState = reduxStore.getState( );
-
-    res.writeHead( 200, { "Content-Type": "text/html" } );
-    res.end( templateHtml( head, reactDom, reduxState ) );
-}
 
 function templateHtml( head, reactDom, reduxState ) {
     return `
