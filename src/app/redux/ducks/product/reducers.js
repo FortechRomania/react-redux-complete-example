@@ -17,18 +17,11 @@ const apple = {
     stock: 10,
 };
 
-const initialState = {
-    details: apple,
-    list: [
-        apple,
-    ],
-};
-
-const detailsReducer = createReducer( initialState )( {
+const detailsReducer = createReducer( apple )( {
     [ types.FETCH_DETAILS_COMPLETED ]: ( state, action ) => action.payload,
 } );
 
-const listReducer = createReducer( initialState )( {
+const listReducer = createReducer( [ apple ] )( {
     [ types.FETCH_LIST_COMPLETED ]: ( state, action ) => action.payload,
 } );
 
