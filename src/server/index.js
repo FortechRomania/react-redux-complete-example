@@ -6,7 +6,7 @@ import cookieParser from "cookie-parser";
 import React from "react";
 import Helmet from "react-helmet";
 import { renderToString } from "react-dom/server";
-import { ServerRouter, createServerRenderContext } from "react-router";
+import { ServerRouter } from "react-router";
 import { Provider as ReduxProvider } from "react-redux";
 
 import apiRoutes from "./apiRoutes";
@@ -23,22 +23,40 @@ app.use( "/api", apiRoutes );
 
 app.use( ( req, res ) => {
     const reduxStore = configureStore( );
-    const context = createServerRenderContext( );
 
-    const reactDom = renderToString(
+    renderToString(
         <ReduxProvider store={ reduxStore }>
-            <ServerRouter location={ req.url } context={ context }>
+            <ServerRouter location={ req.url }>
                 { layouts }
             </ServerRouter>
         </ReduxProvider>
-    );
+    ); // need to figure out a better way of doing this
 
-    const head = Helmet.rewind( );
-    const reduxState = reduxStore.getState( );
+    renderWhenReady( req, res, reduxStore );
 
-    res.writeHead( 200, { "Content-Type": "text/html" } );
-    res.end( templateHtml( head, reactDom, reduxState ) );
+    reduxStore.dispatch( { type: "SERVER_READY" } ); // will be replaced later with a init session
 } );
+
+function renderWhenReady( req, res, reduxStore ) {
+    const unsubscribe = reduxStore.subscribe( ( ) => {
+        const reduxState = reduxStore.getState( );
+        if ( reduxState.busy === 0 ) { // all async actions are done
+            const head = Helmet.rewind( );
+            const reactDom = renderToString(
+                <ReduxProvider store={ reduxStore }>
+                    <ServerRouter location={ req.url }>
+                        { layouts }
+                    </ServerRouter>
+                </ReduxProvider>
+            );
+
+            res.writeHead( 200, { "Content-Type": "text/html" } );
+            res.end( templateHtml( head, reactDom, reduxState ) );
+
+            unsubscribe( );
+        }
+    } );
+}
 
 function templateHtml( head, reactDom, reduxState ) {
     return `

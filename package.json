@@ -10,6 +10,7 @@
   "author": "alexnm <alex.n.moldovan@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "isomorphic-fetch": "^2.2.1",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "react-helmet": "^3.3.0",
@@ -47,7 +48,8 @@
     "compile-js": "webpack --progress --colors --watch",
     "start": "npm run dev-server & npm run compile-js",
     "build": "NODE_ENV=production webpack -p",
-    "linter": "eslint src",
+    "linter": "eslint src --quiet",
+    "linter-with-warnings": "eslint src",
     "test": "mocha --require mochaSetup src/app --recursive"
   }
 }

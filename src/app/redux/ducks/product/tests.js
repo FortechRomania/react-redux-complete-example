@@ -7,9 +7,11 @@ describe( "product reducer", function( ) {
         const action = {
             type: types.FETCH_DETAILS_COMPLETED,
             payload: {
-                id: 1,
-                name: "Test",
-                permalink: "test",
+                product: {
+                    id: 1,
+                    name: "Test",
+                    permalink: "test",
+                },
             },
         };
 

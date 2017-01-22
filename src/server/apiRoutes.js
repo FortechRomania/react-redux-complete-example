@@ -29,6 +29,7 @@ function productOverview( product ) {
         permalink: product.permalink,
         price: product.price,
         imageUrl: product.imageUrl,
+        stock: product.stock,
     };
 }
 

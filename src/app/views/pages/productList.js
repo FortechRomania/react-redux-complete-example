@@ -1,41 +1,31 @@
-import React, { Component } from "react";
+import React from "react";
 import { Link } from "react-router";
 import { connect } from "react-redux";
 import { productOperations } from "../../redux/ducks/product";
 import { productShape } from "../propTypes";
 
-class ProductList extends Component {
-    componentDidMount( ) {
-        this.props.fetchList( );
-    }
+const ProductList = ( { products } ) => {
+    const productList = products.map( p =>
+        ( <Link key={ p.id } to={ `/products/${ p.permalink }` }>{ p.name }</Link> )
+    );
 
-    render( ) {
-        const { products } = this.props;
-        const productList = products.map( p =>
-            ( <Link key={ p.id } to={ `/products/${ p.permalink }` }>{ p.name }</Link> )
-        );
+    return (
+        <div>
+            { productList }
+        </div>
+    );
+};
 
-        return (
-            <div>
-                { productList }
-            </div>
-        );
-    }
-}
-
-const { arrayOf, func } = React.PropTypes;
+const { arrayOf } = React.PropTypes;
 
 ProductList.propTypes = {
     products: arrayOf( productShape ),
-    fetchList: func.isRequired,
 };
+
+ProductList.prefetch = productOperations.fetchList;
 
 const mapStateToProps = ( state ) => ( {
     products: state.product.list,
 } );
 
-const mapDispatchToProps = {
-    fetchList: productOperations.fetchList,
-};
-
-export default connect( mapStateToProps, mapDispatchToProps )( ProductList );
+export default connect( mapStateToProps )( ProductList );

@@ -1,9 +1,10 @@
 import React from "react";
 import { Link, Match } from "react-router";
+import { connect } from "react-redux";
 import { Home, Login, ProductDetails, ProductList, Cart } from "../pages";
-import { withAuthentication } from "../enhancers";
+import { fetchBefore, withAuthentication } from "../enhancers";
 
-const App = ( { pathname } ) => (
+const App = ( { pathname, dispatch } ) => (
     <div>
         <header>
             <Link to="/">Home</Link>
@@ -12,7 +13,11 @@ const App = ( { pathname } ) => (
         </header>
 
         <Match exactly pattern={ pathname } component={ Home } />
-        <Match exactly pattern="/products" component={ ProductList } />
+        <Match
+            exactly
+            pattern="/products"
+            render={ fetchBefore( dispatch, ProductList ) }
+        />
         <Match exactly pattern="/products/:permalink" component={ ProductDetails } />
         <Match exactly pattern="/cart" component={ withAuthentication( Cart ) } />
         <Match exactly pattern="/login" component={ Login } />
@@ -25,6 +30,7 @@ const App = ( { pathname } ) => (
 
 App.propTypes = {
     pathname: React.PropTypes.string.isRequired,
+    dispatch: React.PropTypes.func.isRequired,
 };
 
-export default App;
+export default connect( )( App );

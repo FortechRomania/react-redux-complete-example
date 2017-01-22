@@ -9,20 +9,12 @@ import { createReducer } from "../../utils";
 }
 */
 
-const apple = {
-    id: 1,
-    name: "Apple",
-    permalink: "apple",
-    price: 2.99,
-    stock: 10,
-};
-
-const detailsReducer = createReducer( apple )( {
-    [ types.FETCH_DETAILS_COMPLETED ]: ( state, action ) => action.payload,
+const detailsReducer = createReducer( null )( {
+    [ types.FETCH_DETAILS_COMPLETED ]: ( state, action ) => action.payload.product,
 } );
 
-const listReducer = createReducer( [ apple ] )( {
-    [ types.FETCH_LIST_COMPLETED ]: ( state, action ) => action.payload,
+const listReducer = createReducer( [ ] )( {
+    [ types.FETCH_LIST_COMPLETED ]: ( state, action ) => action.payload.products,
 } );
 
 export default combineReducers( {
