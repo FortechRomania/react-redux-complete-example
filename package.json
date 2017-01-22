@@ -50,6 +50,7 @@
     "build": "NODE_ENV=production webpack -p",
     "linter": "eslint src --quiet",
     "linter-with-warnings": "eslint src",
-    "test": "mocha --require mochaSetup src/app --recursive"
+    "test": "mocha --require mochaSetup src/app --recursive",
+    "ci": "npm run test & npm run linter"
   }
 }
