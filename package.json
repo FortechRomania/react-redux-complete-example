@@ -10,6 +10,7 @@
   "author": "alexnm <alex.n.moldovan@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "eslint-config-fortech": "^1.0.0-alpha2",
     "isomorphic-fetch": "^2.2.1",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
