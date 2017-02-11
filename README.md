@@ -1,6 +1,8 @@
 # WIP - Complete react-redux example project
 An example project based on the folder structure proposed here: https://github.com/alexnm/re-ducks
 
+[![Build Status](https://travis-ci.org/FortechRomania/react-redux-complete-example.svg?branch=master)](https://travis-ci.org/FortechRomania/react-redux-complete-example)
+
 ## Usage
 
 **Clone the repo**
