@@ -1,4 +1,4 @@
-import { default as isomorphicFetch } from "isomorphic-fetch";
+import isomorphicFetch from "isomorphic-fetch";
 
 export default ( url, method, body ) => {
     const options = {

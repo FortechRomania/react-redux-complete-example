@@ -5,9 +5,8 @@ import { productOperations } from "../../redux/ducks/product";
 import { productShape } from "../propTypes";
 
 const ProductList = ( { products } ) => {
-    const productList = products.map( p =>
-        ( <Link key={ p.id } to={ `/products/${ p.permalink }` }>{ p.name }</Link> )
-    );
+    const productList = products
+        .map( p => <Link key={ p.id } to={ `/products/${ p.permalink }` }>{ p.name }</Link> );
 
     return (
         <div>
@@ -20,6 +19,10 @@ const { arrayOf } = React.PropTypes;
 
 ProductList.propTypes = {
     products: arrayOf( productShape ),
+};
+
+ProductList.defaultProps = {
+    products: [ ],
 };
 
 ProductList.prefetch = productOperations.fetchList;

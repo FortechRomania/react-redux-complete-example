@@ -1,4 +1,4 @@
-import { default as reducer } from "./reducers";
+import reducer from "./reducers";
 
 export { default as sessionOperations } from "./operations";
 

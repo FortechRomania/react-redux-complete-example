@@ -18,7 +18,7 @@ const apiService = ( ) => ( next ) => ( action ) => {
 
     return fetch( url, method, body ).then(
         res => handleResponse( res, action, next ),
-        err => handleErrors( err, action, next )
+        err => handleErrors( err, action, next ),
     );
 };
 

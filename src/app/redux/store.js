@@ -14,7 +14,7 @@ export default function configureStore( initialState ) {
         applyMiddleware(
             apiService,
             loggerMiddleware,
-            thunkMiddleware
-        )
+            thunkMiddleware,
+        ),
     );
 }

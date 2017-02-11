@@ -29,7 +29,7 @@ app.use( ( req, res ) => {
             <ServerRouter location={ req.url }>
                 { layouts }
             </ServerRouter>
-        </ReduxProvider>
+        </ReduxProvider>,
     ); // need to figure out a better way of doing this
 
     renderWhenReady( req, res, reduxStore );
@@ -47,7 +47,7 @@ function renderWhenReady( req, res, reduxStore ) {
                     <ServerRouter location={ req.url }>
                         { layouts }
                     </ServerRouter>
-                </ReduxProvider>
+                </ReduxProvider>,
             );
 
             res.writeHead( 200, { "Content-Type": "text/html" } );
