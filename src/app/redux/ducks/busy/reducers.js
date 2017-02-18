@@ -1,12 +1,18 @@
+function getMeta( meta ) {
+    return !meta || !meta.async || !meta.blocking;
+}
+
+function getType ( type ) {
+    return type.includes( "_COMPLETED" ) || type.includes( "_FAILED" );
+}
+
 const busyReducer = ( state = 0, action ) => {
-    if ( !action.meta || !action.meta.async || !action.meta.blocking ) {
+    if ( getMeta( action.meta ) ) {
         return state;
     }
-
-    if ( action.type.includes( "_COMPLETED" ) || action.type.includes( "_FAILED" ) ) {
+    if ( getType( action.type ) ) {
         return state - 1;
     }
-
     return state + 1;
 };
 
