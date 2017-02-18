@@ -17,7 +17,7 @@ describe( "product reducer", function( ) {
 
         const initialState = {
             list: [ ],
-            detail: null,
+            details: null,
         };
 
         const result = reducer( initialState, action );
