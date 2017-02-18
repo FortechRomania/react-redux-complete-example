@@ -2,6 +2,7 @@ import expect from "expect.js";
 import reducer from "./reducers";
 import types from "./types";
 
+/* eslint-disable func-names */
 describe( "product reducer", function( ) {
     describe( "fetch product", function( ) {
         const action = {
