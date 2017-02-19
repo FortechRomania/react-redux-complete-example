@@ -43,6 +43,7 @@ npm run linter
 
 ## Todos
 - [x] Ducks modular approach
-- [ ] Server render with RR 4
+- [ ] Server side rendering with prefetching
 - [ ] Redux Dev Tools / HMR
-- [ ] Style compilation with webpack
+- [ ] Styling Setup
+- [ ] Codesplitting
