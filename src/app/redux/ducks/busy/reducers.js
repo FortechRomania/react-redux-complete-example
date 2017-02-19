@@ -1,12 +1,12 @@
+import utils from "./utils";
+
 const busyReducer = ( state = 0, action ) => {
-    if ( !action.meta || !action.meta.async || !action.meta.blocking ) {
+    if ( utils.actionShouldBlock( action.meta ) ) {
         return state;
     }
-
-    if ( action.type.includes( "_COMPLETED" ) || action.type.includes( "_FAILED" ) ) {
+    if ( utils.actionFinished( action.type ) ) {
         return state - 1;
     }
-
     return state + 1;
 };
 
