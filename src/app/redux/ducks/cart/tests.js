@@ -8,6 +8,7 @@ const product = {
     permalink: "test",
 };
 
+/* eslint-disable func-names */
 describe( "cart reducer", function( ) {
     describe( "add to cart", function( ) {
         const action = {

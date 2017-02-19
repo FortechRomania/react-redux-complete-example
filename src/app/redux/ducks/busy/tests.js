@@ -53,6 +53,7 @@ const nonBlockingFailed = {
     },
 };
 
+/* eslint-disable func-names */
 describe( "busy reducer", function( ) {
     describe( "initial action", function( ) {
         context( "on general action", function( ) {
