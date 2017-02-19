@@ -6,7 +6,9 @@ import { productShape } from "../propTypes";
 
 class ProductList extends Component {
     componentDidMount( ) {
-        this.props.fetchList( );
+        if ( this.props.products.length === 0 ) {
+            this.props.fetchList( );
+        }
     }
 
     render( ) {
