@@ -1,18 +1,32 @@
-import React from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Redirect } from "react-router";
+import { browserHistory } from "react-router";
 
 export default function withAuthentication( WrappedComponent ) {
-    const Wrapper = ( { isAuthenticated } ) => {
-        if ( !isAuthenticated ) {
-            return ( <Redirect to="/login" /> );
+    class WithAuthentication extends Component {
+        componentWillMount( ) {
+            if ( !this.props.isAuthenticated ) {
+                browserHistory.replace( "/login" );
+            }
         }
 
-        return ( <WrappedComponent { ...this.props } /> );
-    };
+        componentWillReceiveProps( ) {
+            if ( !this.props.isAuthenticated ) {
+                browserHistory.replace( "/login" );
+            }
+        }
+
+        render( ) {
+            if ( !this.props.isAuthenticated ) {
+                return false;
+            }
+
+            return ( <WrappedComponent { ...this.props } /> );
+        }
+    }
 
     const { bool } = React.PropTypes;
-    Wrapper.propTypes = {
+    WithAuthentication.propTypes = {
         isAuthenticated: bool.isRequired,
     };
 
@@ -20,5 +34,5 @@ export default function withAuthentication( WrappedComponent ) {
         isAuthenticated: state.session.isAuthenticated,
     } );
 
-    return connect( mapStateToProps )( Wrapper );
+    return connect( mapStateToProps )( WithAuthentication );
 }

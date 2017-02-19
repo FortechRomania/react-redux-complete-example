@@ -6,12 +6,12 @@ import cookieParser from "cookie-parser";
 import React from "react";
 import Helmet from "react-helmet";
 import { renderToString } from "react-dom/server";
-import { ServerRouter } from "react-router";
+import { RouterContext, match } from "react-router";
 import { Provider as ReduxProvider } from "react-redux";
 
 import apiRoutes from "./apiRoutes";
-import layouts from "../app/views/layouts";
 import configureStore from "../app/redux/store";
+import routes from "../app/routes";
 
 const app = express( );
 
@@ -23,40 +23,21 @@ app.use( "/api", apiRoutes );
 
 app.use( ( req, res ) => {
     const reduxStore = configureStore( );
-
-    renderToString(
-        <ReduxProvider store={ reduxStore }>
-            <ServerRouter location={ req.url }>
-                { layouts }
-            </ServerRouter>
-        </ReduxProvider>,
-    ); // need to figure out a better way of doing this
-
-    renderWhenReady( req, res, reduxStore );
-
     reduxStore.dispatch( { type: "SERVER_READY" } ); // will be replaced later with a init session
-} );
 
-function renderWhenReady( req, res, reduxStore ) {
-    const unsubscribe = reduxStore.subscribe( ( ) => {
+    match( { routes, location: req.url }, ( error, redirectLocation, renderProps ) => {
+        const head = Helmet.rewind( );
         const reduxState = reduxStore.getState( );
-        if ( reduxState.busy === 0 ) { // all async actions are done
-            const head = Helmet.rewind( );
-            const reactDom = renderToString(
-                <ReduxProvider store={ reduxStore }>
-                    <ServerRouter location={ req.url }>
-                        { layouts }
-                    </ServerRouter>
-                </ReduxProvider>,
-            );
+        const reactDom = renderToString(
+            <ReduxProvider store={ reduxStore }>
+                <RouterContext { ...renderProps } />
+            </ReduxProvider>,
+        );
 
-            res.writeHead( 200, { "Content-Type": "text/html" } );
-            res.end( templateHtml( head, reactDom, reduxState ) );
-
-            unsubscribe( );
-        }
+        res.writeHead( 200, { "Content-Type": "text/html" } );
+        res.end( templateHtml( head, reactDom, reduxState ) );
     } );
-}
+} );
 
 function templateHtml( head, reactDom, reduxState ) {
     return `

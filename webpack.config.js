@@ -43,6 +43,8 @@ if ( productionEnv ) {
 module.exports = {
     context: path.resolve( __dirname, "src" ),
 
+    devtool: productionEnv ? "source-map" : "cheap-module-source-map",
+
     entry: {
         app: "./client/index.js",
         lib: Object.keys( packageFile.dependencies ),
