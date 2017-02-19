@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router";
 import { connect } from "react-redux";
-import { productOperations } from "../../redux/ducks/product";
+import { productOperations } from "../../state/ducks/product";
 import { productShape } from "../propTypes";
 
 const ProductList = ( { products } ) => {

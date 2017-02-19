@@ -10,7 +10,7 @@ import { RouterContext, match } from "react-router";
 import { Provider as ReduxProvider } from "react-redux";
 
 import apiRoutes from "./apiRoutes";
-import configureStore from "../app/redux/store";
+import configureStore from "../app/state/store";
 import routes from "../app/routes";
 
 const app = express( );

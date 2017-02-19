@@ -4,7 +4,7 @@ import { render } from "react-dom";
 import { Router, browserHistory } from "react-router";
 import { Provider as ReduxProvider } from "react-redux";
 
-import configureStore from "../app/redux/store";
+import configureStore from "../app/state/store";
 import routes from "../app/routes";
 
 const reduxStore = configureStore( window.REDUX_INITIAL_DATA );
