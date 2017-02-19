@@ -67,6 +67,7 @@ function templateHtml( head, reactDom, reduxState ) {
                 ${ head.meta.toString( ) }
                 ${ head.link.toString( ) }
                 <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1"/>
+                <meta charset="UTF-8">
             </head>
             <body>
                 <div id="react-root">${ reactDom }</div>
