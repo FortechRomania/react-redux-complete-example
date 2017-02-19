@@ -26,18 +26,27 @@ app.use( ( req, res ) => {
     reduxStore.dispatch( { type: "SERVER_READY" } ); // will be replaced later with a init session
 
     match( { routes, location: req.url }, ( error, redirectLocation, renderProps ) => {
-        const head = Helmet.rewind( );
-        const reduxState = reduxStore.getState( );
-        const reactDom = renderToString(
-            <ReduxProvider store={ reduxStore }>
-                <RouterContext { ...renderProps } />
-            </ReduxProvider>,
-        );
+        prefetchDataForComponents( renderProps, reduxStore.dispatch ).then( ( ) => {
+            const head = Helmet.rewind( );
+            const reduxState = reduxStore.getState( );
+            const reactDom = renderToString(
+                <ReduxProvider store={ reduxStore }>
+                    <RouterContext { ...renderProps } />
+                </ReduxProvider>,
+            );
 
-        res.writeHead( 200, { "Content-Type": "text/html" } );
-        res.end( templateHtml( head, reactDom, reduxState ) );
+            res.writeHead( 200, { "Content-Type": "text/html" } );
+            res.end( templateHtml( head, reactDom, reduxState ) );
+        } );
     } );
 } );
+
+function prefetchDataForComponents( renderProps, dispatch ) {
+    const promises = renderProps.components
+                                .filter( comp => comp.prefetch )
+                                .map( comp => dispatch( comp.prefetch( renderProps ) ) );
+    return Promise.all( promises );
+}
 
 function templateHtml( head, reactDom, reduxState ) {
     return `
