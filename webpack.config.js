@@ -1,6 +1,7 @@
 const path = require( "path" );
 const webpack = require( "webpack" );
 const packageFile = require( "./package.json" );
+const ExtractTextPlugin = require( "extract-text-webpack-plugin" );
 const BundleAnalyzerPlugin = require( "webpack-bundle-analyzer" ).BundleAnalyzerPlugin;
 
 const productionEnv = process.env.NODE_ENV === "production";
@@ -69,8 +70,20 @@ module.exports = {
                 exclude: /node_modules/,
                 use: "babel-loader",
             },
+            {
+                test: /\.scss$/,
+                use: ExtractTextPlugin.extract( {
+                    fallback: "style-loader",
+                    use: [
+                        "css-loader",
+                        "sass-loader",
+                    ],
+                } ),
+            },
         ],
     },
 
-    plugins,
+    plugins: [
+        new ExtractTextPlugin( "bundle.css" ),
+    ],
 };
