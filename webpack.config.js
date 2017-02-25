@@ -12,7 +12,7 @@ const plugins = [
         minChunks: Infinity,
         filename: "lib.bundle.js",
     } ),
-    new ExtractTextPlugin( "bundle.css" ),
+    new ExtractTextPlugin( "app.bundle.css" ),
     // new BundleAnalyzerPlugin( ),
 ];
 
@@ -72,7 +72,7 @@ module.exports = {
                 use: "babel-loader",
             },
             {
-                test: /\.scss$/,
+                test: /(\.css|\.scss)$/,
                 use: ExtractTextPlugin.extract( {
                     fallback: "style-loader",
                     use: [
@@ -80,6 +80,9 @@ module.exports = {
                             loader: "css-loader",
                             options: {
                                 minimize: true,
+                                //modules: true,
+                                //importLoaders: 1,
+                                //localIdentName: "[path]___[name]__[local]___[hash:base64:5]",
                             },
                         },
                         "sass-loader",

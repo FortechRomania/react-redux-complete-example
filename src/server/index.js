@@ -56,7 +56,7 @@ function templateHtml( head, reactDom, reduxState ) {
                 ${ head.title.toString( ) }
                 ${ head.meta.toString( ) }
                 ${ head.link.toString( ) }
-                <link rel="stylesheet" type="text/css" href="bundle.css">
+                <link rel="stylesheet" type="text/css" href="/app.bundle.css">
                 <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1"/>
                 <meta charset="UTF-8">
             </head>

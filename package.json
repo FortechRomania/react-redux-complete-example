@@ -47,8 +47,8 @@
   },
   "scripts": {
     "dev-server": "nodemon index.js",
-    "compile-js": "webpack --progress --colors --watch",
-    "start": "npm run dev-server & npm run compile-js",
+    "compile": "webpack --progress --colors --watch",
+    "start": "npm run dev-server & npm run compile",
     "build": "NODE_ENV=production webpack -p",
     "linter": "eslint src --quiet",
     "linter-with-warnings": "eslint src",
