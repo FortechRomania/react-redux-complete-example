@@ -1,6 +1,7 @@
 const path = require( "path" );
 const webpack = require( "webpack" );
 const packageFile = require( "./package.json" );
+const ExtractTextPlugin = require( "extract-text-webpack-plugin" );
 const BundleAnalyzerPlugin = require( "webpack-bundle-analyzer" ).BundleAnalyzerPlugin;
 
 const productionEnv = process.env.NODE_ENV === "production";
@@ -11,6 +12,7 @@ const plugins = [
         minChunks: Infinity,
         filename: "lib.bundle.js",
     } ),
+    new ExtractTextPlugin( "bundle.css" ),
     // new BundleAnalyzerPlugin( ),
 ];
 
@@ -68,6 +70,22 @@ module.exports = {
                 test: /(\.jsx|\.js)$/,
                 exclude: /node_modules/,
                 use: "babel-loader",
+            },
+            {
+                test: /\.scss$/,
+                use: ExtractTextPlugin.extract( {
+                    fallback: "style-loader",
+                    use: [
+                        {
+                            loader: "css-loader",
+                            options: {
+                                minimize: true,
+                            },
+                        },
+                        "sass-loader",
+                    ],
+
+                } ),
             },
         ],
     },
