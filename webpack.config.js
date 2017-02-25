@@ -12,6 +12,7 @@ const plugins = [
         minChunks: Infinity,
         filename: "lib.bundle.js",
     } ),
+    new ExtractTextPlugin( "bundle.css" ),
     // new BundleAnalyzerPlugin( ),
 ];
 
@@ -89,7 +90,5 @@ module.exports = {
         ],
     },
 
-    plugins: [
-        new ExtractTextPlugin( "bundle.css" ),
-    ],
+    plugins,
 };
