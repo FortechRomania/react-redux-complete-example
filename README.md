@@ -21,7 +21,7 @@ yarn
 
 **Run project**
 ```
-npm run compile-js
+npm run compile
 npm run dev-server
 ```
 or both tasks in parallel in a single terminal
