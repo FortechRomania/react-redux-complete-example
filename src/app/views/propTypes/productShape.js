@@ -1,6 +1,6 @@
-import React from "react";
+import PropTypes from "prop-types";
 
-const { number, shape, string } = React.PropTypes;
+const { number, shape, string } = PropTypes;
 
 export default shape( {
     id: number.isRequired,

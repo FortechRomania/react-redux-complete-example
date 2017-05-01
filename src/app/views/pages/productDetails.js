@@ -1,20 +1,21 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { productOperations } from "../../state/ducks/product";
 import { productShape } from "../propTypes";
 
 class ProductDetails extends Component {
     componentDidMount( ) {
-        const { product, params, fetchProduct } = this.props;
+        const { product, match, fetchProduct } = this.props;
         const loadedProductPermalink = product ? product.permalink : "";
-        if ( params.permalink !== loadedProductPermalink ) {
-            fetchProduct( params.permalink );
+        if ( match.params.permalink !== loadedProductPermalink ) {
+            fetchProduct( match.params.permalink );
         }
     }
 
     componentWillReceiveProps( nextProps ) {
-        if ( this.props.params.permalink !== nextProps.params.permalink ) {
-            this.props.fetchProduct( nextProps.params.permalink );
+        if ( this.props.match.params.permalink !== nextProps.match.params.permalink ) {
+            this.props.fetchProduct( nextProps.match.params.permalink );
         }
     }
 
@@ -34,14 +35,12 @@ class ProductDetails extends Component {
     }
 }
 
-const { func, string, shape } = React.PropTypes;
+const { object, func } = PropTypes;
 
 ProductDetails.propTypes = {
     product: productShape,
     fetchProduct: func.isRequired,
-    params: shape( {
-        permalink: string.isRequired,
-    } ).isRequired,
+    match: object.isRequired,
 };
 
 ProductDetails.prefetch = ( { params } ) => productOperations.fetchDetails( params.permalink );

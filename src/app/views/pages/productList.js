@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Link } from "react-router";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { productOperations } from "../../state/ducks/product";
 import { productShape } from "../propTypes";
@@ -23,7 +24,7 @@ class ProductList extends Component {
     }
 }
 
-const { arrayOf, func } = React.PropTypes;
+const { arrayOf, func } = PropTypes;
 
 ProductList.propTypes = {
     products: arrayOf( productShape ),

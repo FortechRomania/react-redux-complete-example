@@ -4,11 +4,13 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 
 import React from "react";
-import Helmet from "react-helmet";
 import { renderToString } from "react-dom/server";
-import { RouterContext, match } from "react-router";
+import { matchPath } from "react-router-dom";
+import { StaticRouter } from "react-router";
+import Helmet from "react-helmet";
 import { Provider as ReduxProvider } from "react-redux";
 
+import App from "../app/views/layouts/app";
 import apiRoutes from "./apiRoutes";
 import configureStore from "../app/state/store";
 import routes from "../app/routes";
@@ -25,26 +27,33 @@ app.use( ( req, res ) => {
     const reduxStore = configureStore( );
     reduxStore.dispatch( { type: "SERVER_READY" } ); // will be replaced later with a init session
 
-    match( { routes, location: req.url }, ( error, redirectLocation, renderProps ) => {
-        prefetchDataForComponents( renderProps, reduxStore.dispatch ).then( ( ) => {
-            const head = Helmet.rewind( );
-            const reduxState = reduxStore.getState( );
-            const reactDom = renderToString(
-                <ReduxProvider store={ reduxStore }>
-                    <RouterContext { ...renderProps } />
-                </ReduxProvider>,
-            );
+    prefetchData( req.url, reduxStore.dispatch ).then( ( ) => {
+        const head = Helmet.rewind( );
+        const reduxState = reduxStore.getState( );
+        const context = { };
+        const reactDom = renderToString(
+            <ReduxProvider store={ reduxStore }>
+                <StaticRouter
+                    location={ req.url }
+                    context={ context }
+                >
+                    <App />
+                </StaticRouter>
+            </ReduxProvider>,
+        );
 
-            res.writeHead( 200, { "Content-Type": "text/html" } );
-            res.end( templateHtml( head, reactDom, reduxState ) );
-        } );
+        res.writeHead( 200, { "Content-Type": "text/html" } );
+        res.end( templateHtml( head, reactDom, reduxState ) );
     } );
 } );
 
-function prefetchDataForComponents( renderProps, dispatch ) {
-    const promises = renderProps.components
-                                .filter( comp => comp.prefetch )
-                                .map( comp => dispatch( comp.prefetch( renderProps ) ) );
+function prefetchData( url, dispatch ) {
+    const promises =
+        routes
+            .map( ( route ) => ( { route, match: matchPath( url, route ) } ) )
+            .filter( ( { route, match } ) => match && route.component.prefetch )
+            .map( ( { route, match } ) => dispatch( route.component.prefetch( match ) ) );
+
     return Promise.all( promises );
 }
 

@@ -1,8 +1,8 @@
 import React from "react";
-import { Link } from "react-router";
-import { connect } from "react-redux";
+import { Link, Route } from "react-router-dom";
+import routes from "../../routes";
 
-const App = ( { children } ) => ( // eslint-disable-line react/prop-types
+const App = ( ) => (
     <div>
         <header>
             <Link to="/">Home</Link>
@@ -10,7 +10,7 @@ const App = ( { children } ) => ( // eslint-disable-line react/prop-types
             <Link to="/cart">Cart</Link>
         </header>
 
-        { children }
+        { routes.map( route => <Route key={ route.path } { ...route } /> ) }
 
         <footer>
             I`m here to stay
@@ -18,4 +18,4 @@ const App = ( { children } ) => ( // eslint-disable-line react/prop-types
     </div>
 );
 
-export default connect( )( App );
+export default App;
