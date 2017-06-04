@@ -9,7 +9,7 @@ export const addToCart = ( product, quantity ) => ( {
 } );
 
 export const changeQuantity = ( product, quantity ) => ( {
-    type: types.REMOVE,
+    type: types.CHANGE_QUANTITY,
     payload: {
         product,
         quantity,
