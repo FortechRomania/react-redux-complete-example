@@ -1,4 +1,4 @@
-import { Home, Login, ProductDetails, ProductList, Cart } from "../views/pages";
+import { Home, Login, ProductDetails, ProductList, Cart, MyAccount } from "../views/pages";
 import { withAuthentication } from "../views/enhancers";
 
 const routes = [
@@ -19,7 +19,12 @@ const routes = [
     },
     {
         path: "/cart",
-        component: withAuthentication( Cart ),
+        component: Cart,
+        exact: true,
+    },
+    {
+        path: "/myaccount",
+        component: withAuthentication( MyAccount ),
         exact: true,
     },
     {
