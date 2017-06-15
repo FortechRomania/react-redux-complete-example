@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { productOperations } from "../../state/ducks/product";
+import { cartOperations } from "../../state/ducks/cart";
 import { productShape } from "../propTypes";
 
 class ProductDetails extends Component {
@@ -30,6 +31,15 @@ class ProductDetails extends Component {
                 <div><strong>{ product.name }</strong></div>
                 <div>Price: <strong>${ product.price }</strong></div>
                 <div>Description: { product.description }</div>
+                <div>
+                    <button
+                        onClick={ () => {
+                            this.props.addToCart( product, 1 );
+                        } }
+                    >
+                        Add To Cart
+                    </button>
+                </div>
             </div>
         );
     }
@@ -38,6 +48,7 @@ class ProductDetails extends Component {
 const { object, func } = PropTypes;
 
 ProductDetails.propTypes = {
+    addToCart: func.isRequired,
     product: productShape,
     fetchProduct: func.isRequired,
     match: object.isRequired,
@@ -53,8 +64,9 @@ const mapStateToProps = ( state ) => ( {
     product: state.product.details,
 } );
 
-const mapDispatchToProps = {
+const mapDispatchToProps = ( dispatch ) => ( {
     fetchProduct: productOperations.fetchDetails,
-};
+    addToCart: ( ...args ) => dispatch( cartOperations.addToCart( ...args ) ),
+} );
 
 export default connect( mapStateToProps, mapDispatchToProps )( ProductDetails );

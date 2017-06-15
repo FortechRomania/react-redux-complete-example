@@ -8,12 +8,13 @@ const App = ( ) => (
             <Link to="/">Home</Link>
             <Link to="/products">Products</Link>
             <Link to="/cart">Cart</Link>
+            <Link to="/myaccount">My Account</Link>
         </header>
 
         { routes.map( route => <Route key={ route.path } { ...route } /> ) }
 
         <footer>
-            I`m here to stay
+            I`m the footer, I am on every page.
         </footer>
     </div>
 );
