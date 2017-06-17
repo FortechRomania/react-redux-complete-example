@@ -2,10 +2,5 @@
     "presets": [
         [ "es2015", { "modules": false } ],
         "react"
-    ],
-    "env": {
-        "production": {
-            "plugins": ["transform-react-constant-elements"]
-        }
-    }
+    ]
 }
