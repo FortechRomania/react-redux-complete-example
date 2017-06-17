@@ -64,9 +64,9 @@ const mapStateToProps = ( state ) => ( {
     product: state.product.details,
 } );
 
-const mapDispatchToProps = ( dispatch ) => ( {
+const mapDispatchToProps = {
     fetchProduct: productOperations.fetchDetails,
-    addToCart: ( ...args ) => dispatch( cartOperations.addToCart( ...args ) ),
-} );
+    addToCart: cartOperations.addToCart,
+};
 
 export default connect( mapStateToProps, mapDispatchToProps )( ProductDetails );
