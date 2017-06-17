@@ -7,8 +7,6 @@ import { Provider as ReduxProvider } from "react-redux";
 import App from "../app/views/layouts/app";
 import configureStore from "../app/state/store";
 
-require( "../css/style.scss" );
-
 const reduxStore = configureStore( window.REDUX_INITIAL_DATA );
 
 const RootHtml = ( ) => (

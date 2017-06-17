@@ -12,34 +12,37 @@ const plugins = [
         minChunks: Infinity,
         filename: "lib.bundle.js",
     } ),
-    new ExtractTextPlugin( "app.bundle.css" ),
+    new ExtractTextPlugin( {
+        filename: "[name].bundle.css",
+        allChunks: true,
+    } ),
     // new BundleAnalyzerPlugin( ),
 ];
 
 if ( productionEnv ) {
-    plugins.push(
-        new webpack.LoaderOptionsPlugin( {
-            minimize: true,
-            debug: false,
-        } ),
-        new webpack.optimize.UglifyJsPlugin( {
-            compress: {
-                warnings: false,
-                screw_ie8: true,
-                conditionals: true,
-                unused: true,
-                comparisons: true,
-                sequences: true,
-                dead_code: true,
-                evaluate: true,
-                if_return: true,
-                join_vars: true,
-            },
-            output: {
-                comments: false,
-            },
-        } )
-    );
+    const minify = new webpack.LoaderOptionsPlugin( {
+        minimize: true,
+        debug: false,
+    } );
+
+    const uglify = new webpack.optimize.UglifyJsPlugin( {
+        compress: {
+            warnings: false,
+            screw_ie8: true,
+            conditionals: true,
+            unused: true,
+            comparisons: true,
+            sequences: true,
+            dead_code: true,
+            evaluate: true,
+            if_return: true,
+            join_vars: true,
+        },
+        output: {
+            comments: false,
+        },
+    } );
+    plugins.push( minify, uglify );
 }
 
 module.exports = {
@@ -80,9 +83,9 @@ module.exports = {
                             loader: "css-loader",
                             options: {
                                 minimize: true,
-                                //modules: true,
-                                //importLoaders: 1,
-                                //localIdentName: "[path]___[name]__[local]___[hash:base64:5]",
+                                modules: true,
+                                importLoaders: 1,
+                                localIdentName: "[name]__[local]___[hash:base64:5]",
                             },
                         },
                         "sass-loader",
