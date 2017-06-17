@@ -20,29 +20,10 @@ const plugins = [
 ];
 
 if ( productionEnv ) {
-    const minify = new webpack.LoaderOptionsPlugin( {
-        minimize: true,
-        debug: false,
-    } );
-
-    const uglify = new webpack.optimize.UglifyJsPlugin( {
-        compress: {
-            warnings: false,
-            screw_ie8: true,
-            conditionals: true,
-            unused: true,
-            comparisons: true,
-            sequences: true,
-            dead_code: true,
-            evaluate: true,
-            if_return: true,
-            join_vars: true,
-        },
-        output: {
-            comments: false,
-        },
-    } );
-    plugins.push( minify, uglify );
+    plugins.push(
+        new webpack.optimize.OccurrenceOrderPlugin(),
+        new webpack.LoaderOptionsPlugin( { minimize: true, debug: false } ),
+        new webpack.optimize.UglifyJsPlugin( { sourcemap: true } ) );
 }
 
 module.exports = {
@@ -69,6 +50,21 @@ module.exports = {
 
     module: {
         rules: [
+            {
+                test: /(\.jsx|\.js)$/,
+                enforce: "pre",
+                exclude: /node_modules/,
+                use: [
+                    {
+                        loader: "eslint-loader",
+                        options: {
+                            failOnWarning: false,
+                            failOnError: true,
+                            quiet: true,
+                        },
+                    },
+                ],
+            },
             {
                 test: /(\.jsx|\.js)$/,
                 exclude: /node_modules/,
