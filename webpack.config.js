@@ -16,7 +16,7 @@ const plugins = [
         filename: "[name].bundle.css",
         allChunks: true,
     } ),
-    // new BundleAnalyzerPlugin( ),
+    new BundleAnalyzerPlugin( ),
 ];
 
 if ( productionEnv ) {
@@ -42,6 +42,10 @@ module.exports = {
     },
 
     resolve: {
+        alias: {
+            react: "preact-compat",
+            "react-dom": "preact-compat",
+        },
         modules: [
             path.resolve( "./src" ),
             "node_modules",
