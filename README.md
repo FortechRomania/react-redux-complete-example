@@ -45,5 +45,5 @@ npm run linter
 - [x] Ducks modular approach
 - [x] Server side rendering with prefetching
 - [ ] Redux Dev Tools / HMR
-- [ ] Styling Setup
+- [x] Styling Setup
 - [ ] Codesplitting
