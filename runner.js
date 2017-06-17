@@ -9,4 +9,6 @@ hook( {
     extensions: [ ".scss" ],
 } );
 
-require( "./src/server" );
+const path = process.argv[ 2 ];
+
+require( path ); // eslint-disable-line import/no-dynamic-require

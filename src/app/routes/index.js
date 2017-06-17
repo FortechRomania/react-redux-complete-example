@@ -14,6 +14,7 @@ const routes = [
     },
     {
         path: "/products/:permalink",
+        example: "/products/apple",
         component: ProductDetails,
         exact: true,
     },
