@@ -37,12 +37,12 @@ const createLogger = ( active = true ) => ( store ) => ( next ) => ( action ) =>
 export default createLogger;
 
 function logGroupCollapsed( ...args ) {
-    const logFunction = console.groupCollapsed || console.info;
+    const logFunction = typeof console.groupCollapsed === "function" ? console.groupCollapsed : console.info;
     logFunction( ...args );
 }
 
 function logGroupEnd( ...args ) {
-    const logFunction = console.groupEnd || console.info;
+    const logFunction = typeof console.groupEnd === "function" ? console.groupEnd : console.info;
     logFunction( ...args );
 }
 
