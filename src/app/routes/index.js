@@ -1,5 +1,5 @@
-import { Home, Login, ProductDetails, ProductList, Cart, MyAccount } from "../views/pages";
-import { withAuthentication } from "../views/enhancers";
+import { Home, Login, ProductDetails, ProductList } from "../views/pages";
+import { withAuthentication, lazyLoad } from "../views/enhancers";
 
 const routes = [
     {
@@ -20,12 +20,12 @@ const routes = [
     },
     {
         path: "/cart",
-        component: Cart,
+        component: lazyLoad( ( ) => import( "../views/pages/cart" ) ),
         exact: true,
     },
     {
         path: "/myaccount",
-        component: withAuthentication( MyAccount ),
+        component: withAuthentication( lazyLoad( ( ) => import( "../views/pages/myAccount" ) ) ),
         exact: true,
     },
     {

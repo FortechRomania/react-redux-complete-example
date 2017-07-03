@@ -16,7 +16,7 @@ const plugins = [
         filename: "[name].bundle.css",
         allChunks: true,
     } ),
-    // new BundleAnalyzerPlugin( ),
+    new BundleAnalyzerPlugin( ),
 ];
 
 if ( productionEnv ) {

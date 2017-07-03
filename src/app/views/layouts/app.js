@@ -12,7 +12,9 @@ const App = ( ) => (
             <Link to="/myaccount">My Account</Link>
         </header>
 
-        { routes.map( route => <Route key={ route.path } { ...route } /> ) }
+        { routes.map( route => (
+            <Route key={ route.path } { ...route } />
+         ) ) }
 
         <footer>
             I`m the footer, I am on every page.
