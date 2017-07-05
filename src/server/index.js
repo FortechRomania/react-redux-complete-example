@@ -14,7 +14,6 @@ import App from "../app/views/layouts/app";
 import apiRoutes from "./apiRoutes";
 import configureStore from "../app/state/store";
 import routes from "../app/routes";
-import criticalCssMap from "./criticalCss.json";
 
 const app = express( );
 
@@ -43,10 +42,8 @@ app.use( ( req, res ) => {
             </ReduxProvider>,
         );
 
-        const matchedPath = routes.find( ( route ) => matchPath( req.url, route ) ).path;
-        const criticalCss = criticalCssMap[ matchedPath ] || "";
         res.writeHead( 200, { "Content-Type": "text/html" } );
-        res.end( templateHtml( head, reactDom, reduxState, criticalCss ) );
+        res.end( templateHtml( head, reactDom, reduxState ) );
     } ).catch( err => console.log( err ) );
 } );
 
@@ -60,23 +57,7 @@ function prefetchData( url, dispatch ) {
     return Promise.all( promises );
 }
 
-function templateHtml( head, reactDom, reduxState, criticalCss ) {
-    const styleInHead = criticalCss ?
-        `<style>${ criticalCss }</style>` :
-        "<link rel=\"stylesheet\" type=\"text/css\" href=\"/app.bundle.css\">";
-
-    const styleInBody = criticalCss ?
-        `<script type="text/javascript">
-            var styleSheet = document.createElement('link');
-            styleSheet.rel = 'stylesheet';
-            styleSheet.href = '/app.bundle.css';
-            styleSheet.type = 'text/css';
-            document.head.append(styleSheet);
-        </script>
-        <noscript>
-            <link rel="stylesheet" type="text/css" href="/app.bundle.css">
-        </noscript>` : "";
-
+function templateHtml( head, reactDom, reduxState ) {
     return `
         <!doctype html>
         <html>
@@ -86,7 +67,6 @@ function templateHtml( head, reactDom, reduxState, criticalCss ) {
                 ${ head.link.toString( ) }
                 <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1"/>
                 <meta charset="UTF-8">
-                ${ styleInHead }
             </head>
             <body>
                 <div id="react-root">${ reactDom }</div>
@@ -97,8 +77,6 @@ function templateHtml( head, reactDom, reduxState, criticalCss ) {
 
                 <script defer src="/lib.bundle.js"></script>
                 <script defer src="/app.bundle.js"></script>
-
-                ${ styleInBody }
             </body>
         </html>
     `;
