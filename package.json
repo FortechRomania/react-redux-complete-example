@@ -46,11 +46,7 @@
     "extract-text-webpack-plugin": "^2.1.2",
     "isomorphic-fetch": "^2.2.1",
     "mocha": "^3.2.0",
-    "node-sass": "^4.5.3",
     "nodemon": "^1.11.0",
-    "penthouse": "^0.11.4",
-    "sass-loader": "^6.0.6",
-    "style-loader": "^0.18.2",
     "webpack": "^3.0.0",
     "webpack-bundle-analyzer": "^2.8.2"
   },
