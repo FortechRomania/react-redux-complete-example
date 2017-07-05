@@ -22,9 +22,11 @@
     "react-router-dom": "^4.1.1",
     "redux": "^3.6.0",
     "redux-logger": "^3.0.1",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "styled-components": "^2.1.1"
   },
   "devDependencies": {
+    "babel-plugin-styled-components": "^1.1.7",
     "babel": "^6.5.2",
     "babel-core": "^6.25.0",
     "babel-eslint": "^7.1.1",

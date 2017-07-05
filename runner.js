@@ -1,6 +1,16 @@
 require( "babel-register" )( {
     presets: [ "es2015" ],
-    plugins: [ "dynamic-import-node" ],
+    plugins: [
+        "dynamic-import-node",
+        [
+            "styled-components",
+            {
+                ssr: true,
+                displayName: true,
+                preprocess: false,
+            },
+        ],
+    ],
 } );
 
 const path = process.argv[ 2 ];

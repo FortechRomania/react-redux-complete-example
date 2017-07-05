@@ -3,5 +3,15 @@
         [ "es2015", { "modules": false } ],
         "react",
         "stage-0"
-    ]
+    ],
+    // "plugins": [
+    //     [
+    //         "styled-components",
+    //         {
+    //         "ssr": true,
+    //         "displayName": true,
+    //         "preprocess": false
+    //         }
+    //   ]
+    // ]
 }

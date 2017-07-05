@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 
 import React from "react";
 import { renderToString } from "react-dom/server";
+import { ServerStyleSheet } from 'styled-components';
 import { matchPath } from "react-router-dom";
 import { StaticRouter } from "react-router";
 import Helmet from "react-helmet";
@@ -25,6 +26,8 @@ app.use( "/api", apiRoutes );
 
 app.use( ( req, res ) => {
     const reduxStore = configureStore( );
+    const sheet = new ServerStyleSheet();
+
     reduxStore.dispatch( { type: "SERVER_READY" } ); // will be replaced later with a init session
 
     prefetchData( req.url, reduxStore.dispatch ).then( ( ) => {
@@ -32,18 +35,22 @@ app.use( ( req, res ) => {
         const reduxState = reduxStore.getState( );
         const context = { };
         const reactDom = renderToString(
-            <ReduxProvider store={ reduxStore }>
-                <StaticRouter
-                    location={ req.url }
-                    context={ context }
-                >
-                    <App />
-                </StaticRouter>
-            </ReduxProvider>,
+            sheet.collectStyles(
+                <ReduxProvider store={ reduxStore }>
+                    <StaticRouter
+                        location={ req.url }
+                        context={ context }
+                    >
+                        <App />
+                    </StaticRouter>
+                </ReduxProvider>,
+            ),
         );
 
+        const styles = sheet.getStyleTags();
+
         res.writeHead( 200, { "Content-Type": "text/html" } );
-        res.end( templateHtml( head, reactDom, reduxState ) );
+        res.end( templateHtml( head, reactDom, reduxState, styles ) );
     } ).catch( err => console.log( err ) );
 } );
 
@@ -57,7 +64,7 @@ function prefetchData( url, dispatch ) {
     return Promise.all( promises );
 }
 
-function templateHtml( head, reactDom, reduxState ) {
+function templateHtml( head, reactDom, reduxState, styles ) {
     return `
         <!doctype html>
         <html>
@@ -65,6 +72,7 @@ function templateHtml( head, reactDom, reduxState ) {
                 ${ head.title.toString( ) }
                 ${ head.meta.toString( ) }
                 ${ head.link.toString( ) }
+                ${ styles }
                 <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1"/>
                 <meta charset="UTF-8">
             </head>
