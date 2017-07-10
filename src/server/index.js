@@ -5,7 +5,7 @@ import cookieParser from "cookie-parser";
 
 import React from "react";
 import { renderToString } from "react-dom/server";
-import { ServerStyleSheet } from 'styled-components';
+import { ServerStyleSheet } from "styled-components";
 import { matchPath } from "react-router-dom";
 import { StaticRouter } from "react-router";
 import Helmet from "react-helmet";
