@@ -1,16 +1,24 @@
 import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import styles from "./cart.scss";
+import styled from "styled-components";
+
+const CartItem = styled.div`
+    margin: 10px;
+
+    &:hover {
+        background-color: grey;
+    }
+`;
 
 const Cart = ( { cartItems } ) => {
     if ( cartItems.length === 0 ) {
         return ( <div>You have no items in the cart </div> );
     }
     const items = cartItems.map( item => (
-        <div className={ styles.cartItem } key={ item.product.id }>
+        <CartItem key={ item.product.id }>
             { item.product.name } - { item.quantity } { item.quantity > 1 ? "items" : "item" }
-        </div> ) );
+        </CartItem> ) );
     return (
         <div>
             { items }

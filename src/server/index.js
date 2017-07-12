@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 
 import React from "react";
 import { renderToString } from "react-dom/server";
+import { ServerStyleSheet } from "styled-components";
 import { matchPath } from "react-router-dom";
 import { StaticRouter } from "react-router";
 import Helmet from "react-helmet";
@@ -14,7 +15,6 @@ import App from "../app/views/layouts/app";
 import apiRoutes from "./apiRoutes";
 import configureStore from "../app/state/store";
 import routes from "../app/routes";
-import criticalCssMap from "./criticalCss.json";
 
 const app = express( );
 
@@ -26,6 +26,8 @@ app.use( "/api", apiRoutes );
 
 app.use( ( req, res ) => {
     const reduxStore = configureStore( );
+    const sheet = new ServerStyleSheet();
+
     reduxStore.dispatch( { type: "SERVER_READY" } ); // will be replaced later with a init session
 
     prefetchData( req.url, reduxStore.dispatch ).then( ( ) => {
@@ -33,20 +35,22 @@ app.use( ( req, res ) => {
         const reduxState = reduxStore.getState( );
         const context = { };
         const reactDom = renderToString(
-            <ReduxProvider store={ reduxStore }>
-                <StaticRouter
-                    location={ req.url }
-                    context={ context }
-                >
-                    <App />
-                </StaticRouter>
-            </ReduxProvider>,
+            sheet.collectStyles(
+                <ReduxProvider store={ reduxStore }>
+                    <StaticRouter
+                        location={ req.url }
+                        context={ context }
+                    >
+                        <App />
+                    </StaticRouter>
+                </ReduxProvider>,
+            ),
         );
 
-        const matchedPath = routes.find( ( route ) => matchPath( req.url, route ) ).path;
-        const criticalCss = criticalCssMap[ matchedPath ] || "";
+        const styles = sheet.getStyleTags();
+
         res.writeHead( 200, { "Content-Type": "text/html" } );
-        res.end( templateHtml( head, reactDom, reduxState, criticalCss ) );
+        res.end( templateHtml( head, reactDom, reduxState, styles ) );
     } ).catch( err => console.log( err ) );
 } );
 
@@ -60,23 +64,7 @@ function prefetchData( url, dispatch ) {
     return Promise.all( promises );
 }
 
-function templateHtml( head, reactDom, reduxState, criticalCss ) {
-    const styleInHead = criticalCss ?
-        `<style>${ criticalCss }</style>` :
-        "<link rel=\"stylesheet\" type=\"text/css\" href=\"/app.bundle.css\">";
-
-    const styleInBody = criticalCss ?
-        `<script type="text/javascript">
-            var styleSheet = document.createElement('link');
-            styleSheet.rel = 'stylesheet';
-            styleSheet.href = '/app.bundle.css';
-            styleSheet.type = 'text/css';
-            document.head.append(styleSheet);
-        </script>
-        <noscript>
-            <link rel="stylesheet" type="text/css" href="/app.bundle.css">
-        </noscript>` : "";
-
+function templateHtml( head, reactDom, reduxState, styles ) {
     return `
         <!doctype html>
         <html>
@@ -84,9 +72,9 @@ function templateHtml( head, reactDom, reduxState, criticalCss ) {
                 ${ head.title.toString( ) }
                 ${ head.meta.toString( ) }
                 ${ head.link.toString( ) }
+                ${ styles }
                 <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1"/>
                 <meta charset="UTF-8">
-                ${ styleInHead }
             </head>
             <body>
                 <div id="react-root">${ reactDom }</div>
@@ -97,8 +85,6 @@ function templateHtml( head, reactDom, reduxState, criticalCss ) {
 
                 <script defer src="/lib.bundle.js"></script>
                 <script defer src="/app.bundle.js"></script>
-
-                ${ styleInBody }
             </body>
         </html>
     `;

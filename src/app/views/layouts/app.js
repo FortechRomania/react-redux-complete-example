@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, Route } from "react-router-dom";
 import routes from "../../routes";
-import "./app.scss";
+import Styles from "./css";
 
 const App = ( ) => (
     <div>
@@ -19,6 +19,8 @@ const App = ( ) => (
         <footer>
             I`m the footer, I am on every page.
         </footer>
+
+        <Styles />
     </div>
 );
 

@@ -1,13 +1,16 @@
 require( "babel-register" )( {
     presets: [ "es2015" ],
-    plugins: [ "dynamic-import-node" ],
-} );
-
-const hook = require( "css-modules-require-hook" );
-
-hook( {
-    generateScopedName: "[name]__[local]___[hash:base64:5]",
-    extensions: [ ".scss" ],
+    plugins: [
+        "dynamic-import-node",
+        [
+            "styled-components",
+            {
+                ssr: true,
+                displayName: true,
+                preprocess: false,
+            },
+        ],
+    ],
 } );
 
 const path = process.argv[ 2 ];
