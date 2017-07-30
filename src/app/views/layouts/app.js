@@ -14,7 +14,7 @@ const App = ( ) => (
 
         { routes.map( route => (
             <Route key={ route.path } { ...route } />
-         ) ) }
+        ) ) }
 
         <footer>
             I`m the footer, I am on every page.
