@@ -9,13 +9,23 @@
   },
   "author": "alexnm <alex.n.moldovan@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "dev-server": "nodemon runner.js ./src/server",
+    "compile": "webpack --progress --colors --watch",
+    "start": "npm run dev-server & npm run compile",
+    "build": "NODE_ENV=production webpack",
+    "linter": "eslint src --quiet",
+    "linter-with-warnings": "eslint src",
+    "test": "mocha --require mochaSetup src/app --recursive",
+    "ci": "npm run test & npm run linter"
+  },
   "dependencies": {
     "isomorphic-fetch": "^2.2.1",
     "preact": "^8.1.0",
     "preact-compat": "^3.16.0",
-    "prop-types": "^15.5.8",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4",
+    "prop-types": "^15.5.10",
+    "react": "next",
+    "react-dom": "next",
     "react-helmet": "^5.1.3",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.2",
@@ -47,15 +57,5 @@
     "nodemon": "^1.11.0",
     "webpack": "^3.4.1",
     "webpack-bundle-analyzer": "^2.8.3"
-  },
-  "scripts": {
-    "dev-server": "nodemon runner.js ./src/server",
-    "compile": "webpack --progress --colors --watch",
-    "start": "npm run dev-server & npm run compile",
-    "build": "NODE_ENV=production webpack",
-    "linter": "eslint src --quiet",
-    "linter-with-warnings": "eslint src",
-    "test": "mocha --require mochaSetup src/app --recursive",
-    "ci": "npm run test & npm run linter"
   }
 }

@@ -16,6 +16,7 @@ const plugins = [
         filename: "[name].bundle.css",
         allChunks: true,
     } ),
+    new webpack.DefinePlugin( { "process.env.NODE_ENV": JSON.stringify( process.env.NODE_ENV ) } ),
     new BundleAnalyzerPlugin( ),
 ];
 
@@ -43,8 +44,8 @@ module.exports = {
 
     resolve: {
         alias: {
-            react: "preact-compat",
-            "react-dom": "preact-compat",
+            // react: "preact-compat",
+            // "react-dom": "preact-compat",
         },
         modules: [
             path.resolve( "./src" ),
