@@ -1,6 +1,11 @@
 import reducer from "./reducers";
 
-export { default as cartOperations } from "./operations";
-export { default as cartSelectors } from "./selectors";
+import * as cartOperations from "./operations";
+import * as cartSelectors from "./selectors";
+
+export {
+    cartOperations,
+    cartSelectors,
+};
 
 export default reducer;

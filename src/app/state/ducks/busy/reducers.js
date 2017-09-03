@@ -1,4 +1,4 @@
-import utils from "./utils";
+import * as utils from "./utils";
 
 const busyReducer = ( state = 0, action ) => {
     if ( utils.actionShouldBlock( action.meta ) ) {

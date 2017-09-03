@@ -1,13 +1,5 @@
-const SET_CART = "cart/SET";
-const ADD = "cart/ADD";
-const CHANGE_QUANTITY = "cart/CHANGE_QUANTITY";
-const REMOVE = "cart/REMOVE";
-const CLEAR = "cart/CLEAR";
-
-export default {
-    ADD,
-    CHANGE_QUANTITY,
-    CLEAR,
-    REMOVE,
-    SET_CART,
-};
+export const SET_CART = "cart/SET";
+export const ADD = "cart/ADD";
+export const CHANGE_QUANTITY = "cart/CHANGE_QUANTITY";
+export const REMOVE = "cart/REMOVE";
+export const CLEAR = "cart/CLEAR";

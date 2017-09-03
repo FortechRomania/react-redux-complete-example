@@ -1,4 +1,4 @@
-import types from "./types";
+import * as types from "./types";
 
 export const fetchDetails = ( permalink ) => ( {
     type: types.FETCH_DETAILS,
@@ -19,8 +19,3 @@ export const fetchList = ( ) => ( {
         method: "GET",
     },
 } );
-
-export default {
-    fetchDetails,
-    fetchList,
-};

@@ -1,4 +1,4 @@
-import types from "./types";
+import * as types from "./types";
 
 export const addToCart = ( product, quantity ) => ( {
     type: types.ADD,
@@ -33,11 +33,3 @@ export const setCart = ( cart ) => ( {
         cart,
     },
 } );
-
-export default {
-    addToCart,
-    changeQuantity,
-    clearCart,
-    removeFromCart,
-    setCart,
-};

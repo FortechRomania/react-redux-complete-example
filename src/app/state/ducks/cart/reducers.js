@@ -1,5 +1,5 @@
-import types from "./types";
-import utils from "./utils";
+import * as types from "./types";
+import * as utils from "./utils";
 import { createReducer } from "../../utils";
 
 /* State shape

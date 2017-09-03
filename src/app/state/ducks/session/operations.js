@@ -1,13 +1,6 @@
-import actions from "./actions";
+import * as actions from "./actions";
 
-const login = actions.login;
-const logout = actions.logout;
-const initializeSession = actions.initializeSession;
-const setRedirectAfterLogin = actions.setRedirectAfterLogin;
-
-export default {
-    initializeSession,
-    login,
-    logout,
-    setRedirectAfterLogin,
-};
+export const login = actions.login;
+export const logout = actions.logout;
+export const initializeSession = actions.initializeSession;
+export const setRedirectAfterLogin = actions.setRedirectAfterLogin;

@@ -1,24 +1,17 @@
-import types from "./types";
+import * as types from "./types";
 
-const login = ( ) => ( {
+export const login = ( ) => ( {
     type: types.LOGIN,
 } );
 
-const logout = ( ) => ( {
+export const logout = ( ) => ( {
     type: types.LOGOUT,
 } );
 
-const initializeSession = ( ) => ( {
+export const initializeSession = ( ) => ( {
     type: types.INITIALIZE,
 } );
 
-const setRedirectAfterLogin = ( ) => ( {
+export const setRedirectAfterLogin = ( ) => ( {
     type: types.SET_REDIRECT_AFTER_LOGIN,
 } );
-
-export default {
-    initializeSession,
-    login,
-    logout,
-    setRedirectAfterLogin,
-};

@@ -8,8 +8,3 @@ export function newCartItem( product, quantity ) {
         quantity,
     };
 }
-
-export default {
-    newCartItem,
-    productPositionInCart,
-};

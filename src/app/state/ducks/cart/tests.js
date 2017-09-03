@@ -1,6 +1,6 @@
 import expect from "expect.js";
 import reducer from "./reducers";
-import types from "./types";
+import * as types from "./types";
 
 const product = {
     id: 1,
