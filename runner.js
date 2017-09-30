@@ -1,5 +1,5 @@
 require( "babel-register" )( {
-    presets: [ "es2015" ],
+    presets: [ "env" ],
     plugins: [
         "dynamic-import-node",
         [
