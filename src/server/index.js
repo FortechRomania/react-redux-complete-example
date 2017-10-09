@@ -33,18 +33,17 @@ app.use( ( req, res ) => {
         const head = Helmet.rewind( );
         const reduxState = reduxStore.getState( );
         const context = { };
-        const reactDom = renderToString(
-            sheet.collectStyles(
-                <ReduxProvider store={ reduxStore }>
-                    <StaticRouter
-                        location={ req.url }
-                        context={ context }
-                    >
-                        <App />
-                    </StaticRouter>
-                </ReduxProvider>,
-            ),
+        const jsx = (
+            <ReduxProvider store={ reduxStore }>
+                <StaticRouter
+                    location={ req.url }
+                    context={ context }
+                >
+                    <App />
+                </StaticRouter>
+            </ReduxProvider>
         );
+        const reactDom = renderToString( sheet.collectStyles( jsx ) );
 
         const styles = sheet.getStyleTags();
 

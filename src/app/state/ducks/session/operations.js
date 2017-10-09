@@ -1,6 +1,8 @@
-import * as actions from "./actions";
+import { login, logout, initializeSession, setRedirectAfterLogin } from "./actions";
 
-export const login = actions.login;
-export const logout = actions.logout;
-export const initializeSession = actions.initializeSession;
-export const setRedirectAfterLogin = actions.setRedirectAfterLogin;
+export {
+    login,
+    logout,
+    initializeSession,
+    setRedirectAfterLogin,
+};

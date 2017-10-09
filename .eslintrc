@@ -1,6 +1,12 @@
 {
-    "extends": "fortech",
+    "extends": "fortech-react",
+    "env": {
+        "browser": true,
+        "mocha": true
+    },
     "rules": {
-        "react/forbid-prop-types": 1
+        "prefer-promise-reject-errors": 1,
+        "react/forbid-prop-types": 1,
+        "react/no-typos": 0
     }
 }

@@ -1,5 +1,6 @@
-import * as actions from "./actions";
+import { fetchDetails, fetchList } from "./actions";
 
-export const fetchDetails = actions.fetchDetails;
-
-export const fetchList = actions.fetchList;
+export {
+    fetchDetails,
+    fetchList,
+};
